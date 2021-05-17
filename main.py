@@ -143,7 +143,7 @@ def start_listen_twitter():
     print("[*] Searching IoC's on Twitter:")
 
     if args.alerts:
-        print("[*] Checking if the tweets gathered contain any keyword of your list.")
+        print("[*] Checking if the tweets gathered contain any keyword from your list.")
         tweets = search_on_twitter(api, True)
         if args.misp:
             if args.proxy:

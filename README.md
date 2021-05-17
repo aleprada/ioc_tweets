@@ -31,7 +31,7 @@ python main.py
 Output example
 ``` bash
 [*] Searching IoC's on Twitter:
-[*] Checking if the tweets gathered contain any keyword of your list.
+[*] Checking if the tweets gathered contain any keyword from your list.
 [+] Tweet containing: opendir
 	[!] Tweet by beefyspace on 2021-05-17 08:17:14:
 	[!] #phishing
@@ -48,7 +48,7 @@ python main.py -a
 Output example (same as above)
 ``` bash
 [*] Searching IoC's on Twitter:
-[*] Checking if the tweets gathered contain any keyword of your list.
+[*] Checking if the tweets gathered contain any keyword from your list.
 [+] Tweet containing: opendir
 	[!] Tweet by beefyspace on 2021-05-17 08:17:14:
 	[!] #phishing
@@ -65,7 +65,7 @@ python main.py -a -m
 ```
 ``` bash
 [*] Searching IoC's on Twitter:
-[*] Checking if the tweets gathered contain any keyword of your list.
+[*] Checking if the tweets gathered contain any keyword from your list.
 [+] Tweet containing: opendir
 	[!] Tweet by beefyspace on 2021-05-17 08:17:14:
 	[!] #phishing
