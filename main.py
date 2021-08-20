@@ -6,7 +6,6 @@ from datetime import date
 import configparser
 import argparse
 import tweepy
-import json
 import os
 
 
@@ -63,8 +62,9 @@ def send2misp(tweet, proxy_usage):
     event.add_tag("tweet-ioc")
     event.info = "[Tweet] New IoCs discovered on Twitter"
     event.add_attribute('twitter-id', tweet.user.screen_name)
-    event.add_attribute('other', tweet.text)
+    event.add_attribute('other', tweet.full_text)
     event.add_attribute('other', tweet.created_at.strftime("%Y-%m-%dT%H:%M:%S"))
+    event.add_attribute('link', "https://twitter.com/"+tweet.user.screen_name+"/status/"+tweet.id_str)
     if 'hashtags' in tweet.entities:
         for h in tweet.entities['hashtags']:
             event.add_attribute('other', h['text'])
@@ -104,7 +104,7 @@ def print_tweet(tweet):
         for h in tweet.entities['urls']:
             print("\t[!] url: " + h['url'])
     print("\t[!]Tweet content:")
-    print("\t\t" + tweet.text.replace("\n", "\n\t\t"))
+    print("\t\t" + tweet.full_text.replace("\n", "\n\t\t"))
 
 
 def search_on_twitter(api, alerts):
@@ -114,10 +114,10 @@ def search_on_twitter(api, alerts):
     for k in keywords:
         sleep(5)
         print("[+] Tweet containing: " + k)
-        tweets = tweepy.Cursor(api.search, q=k, lang="en", since= today).items(100)
+        tweets = tweepy.Cursor(api.search, q=k, lang="en", since=today, tweet_mode = "extended").items(300)
         if alerts:
             for tweet in tweets:
-                if filter_tweets(tweet.text):
+                if filter_tweets(tweet.full_text):
                     print_tweet(tweet)
                     tweets_list.append(tweet)
         else:
@@ -132,7 +132,7 @@ def start_listen_twitter():
     auth = init_twitter_config()
     api = tweepy.API(auth, wait_on_rate_limit=True)
     parser = argparse.ArgumentParser()
-    parser.add_argument("-a", "--alerts", help=" Filter tweets gathered in case of matach with any "
+    parser.add_argument("-a", "--alerts", help=" Filter tweets gathered in case of a match with any "
                                                "keywords of your list.",
                                                action="store_true")
     parser.add_argument("-m", "--misp", help="Send IoCs from Twitter to MISP", action="store_true")
