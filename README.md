@@ -19,7 +19,7 @@ It's very simple.
 2) If you have **typed -a option**, the script will read your filters.txt file, and it will
 check if the tweets gathered contain any of your filters. 
 
-3) If you have typed **-m option together with -a**, you will send the alerts to
+3) If you type **-m option together with -a**, you will send the alerts to
 your MISP instance.
    
 **Usage**
